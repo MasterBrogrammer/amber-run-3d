@@ -12,6 +12,8 @@ GitHub Pages hosts both builds (first load is ~40 MB):
 
 Click the game canvas once so it has keyboard focus.
 
+Screenshots and grab-ready thumbs (full, card, OG, square) are in [`docs/thumbs/`](https://masterbrogrammer.github.io/amber-run-3d/thumbs/).
+
 ## Play locally
 
 - **Editor:** open this folder in **Godot 4.7.1** and press **F5**.

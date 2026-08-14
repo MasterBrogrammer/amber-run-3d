@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Amber Run</title>
+  <meta property="og:title" content="Amber Run" />
+  <meta property="og:description" content="A short sunset platformer. Play the original or the 3D remake." />
+  <meta property="og:image" content="https://masterbrogrammer.github.io/amber-run-3d/thumbs/remake-og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <style>
     :root {
       --navy: #120b1c;
@@ -51,10 +55,18 @@
       background: rgba(18, 11, 28, 0.72);
       border: 2px solid #f5b14d;
       border-radius: 14px;
-      padding: 22px 22px 20px;
+      overflow: hidden;
       box-shadow: 0 10px 0 #1a1028;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
+    a.card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #1a1028;
+    }
+    .body { padding: 18px 22px 20px; }
     a.card:hover, a.card:focus-visible {
       transform: translateY(-3px);
       box-shadow: 0 13px 0 #1a1028;
@@ -85,6 +97,7 @@
       font-size: 13px;
       color: #2a1620;
     }
+    footer a { color: #2a1620; }
   </style>
 </head>
 <body>
@@ -93,19 +106,28 @@
     <p class="lede">A short sunset platformer. Collect coins, reach the flag, try not to fall.</p>
     <div class="grid">
       <a class="card" href="original/">
-        <p class="kicker">Original</p>
-        <h2>Block art</h2>
-        <p>The first demo: ColorRect sunset, coral runner, five coins.</p>
-        <span class="go">Play original</span>
+        <img src="thumbs/original-card.jpg" width="960" height="540" alt="Amber Run original: block-art sunset platforms" />
+        <div class="body">
+          <p class="kicker">Original</p>
+          <h2>Block art</h2>
+          <p>The first demo: ColorRect sunset, coral runner, five coins.</p>
+          <span class="go">Play original</span>
+        </div>
       </a>
       <a class="card" href="remake/">
-        <p class="kicker">Remake</p>
-        <h2>3D sprites</h2>
-        <p>Same scroller, Blender-rendered assets, waving flag, layered sky.</p>
-        <span class="go">Play remake</span>
+        <img src="thumbs/remake-card.jpg" width="960" height="540" alt="Amber Run 3D remake: Blender sprites on a sunset hill" />
+        <div class="body">
+          <p class="kicker">Remake</p>
+          <h2>3D sprites</h2>
+          <p>Same scroller, Blender-rendered assets, waving flag, layered sky.</p>
+          <span class="go">Play remake</span>
+        </div>
       </a>
     </div>
-    <footer>Click the game window first so it has focus. A/D or arrows to run, Space/W to jump. First load pulls a ~40&nbsp;MB engine file.</footer>
+    <footer>
+      Click the game window first so it has focus. A/D or arrows to run, Space/W to jump. First load pulls a ~40&nbsp;MB engine file.
+      Thumbnails: <a href="thumbs/">thumbs/</a>
+    </footer>
   </main>
 </body>
 </html>
