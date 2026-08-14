@@ -1,0 +1,414 @@
+[gd_scene load_steps=25 format=3]
+
+[ext_resource type="Script" uid="uid://aq3n8v2k1m4bp" path="res://scripts/game.gd" id="1_game"]
+[ext_resource type="Script" uid="uid://bp7r4w9x2c8hd" path="res://scripts/player.gd" id="2_player"]
+[ext_resource type="AudioStream" path="res://audio/jump.wav" id="3_jump"]
+[ext_resource type="Script" uid="uid://cn5t6y1z3f0jq" path="res://scripts/coin.gd" id="4_coin"]
+[ext_resource type="AudioStream" path="res://audio/coin.wav" id="5_coin_sfx"]
+[ext_resource type="AudioStream" path="res://audio/fall.wav" id="6_fall"]
+[ext_resource type="AudioStream" path="res://audio/win.wav" id="7_win"]
+[ext_resource type="AudioStream" path="res://audio/amber_theme.wav" id="8_theme"]
+[ext_resource type="SpriteFrames" path="res://assets/player/player_frames.tres" id="9_frames"]
+[ext_resource type="Texture2D" path="res://assets/world/sky.png" id="10_sky"]
+[ext_resource type="Texture2D" path="res://assets/world/ground.png" id="11_ground"]
+[ext_resource type="Texture2D" path="res://assets/world/platform.png" id="12_plat"]
+[ext_resource type="Texture2D" path="res://assets/world/platform_wide.png" id="13_plat_wide"]
+[ext_resource type="Texture2D" path="res://assets/world/flag.png" id="14_flag"]
+[ext_resource type="Texture2D" path="res://assets/world/coin.png" id="15_coin_tex"]
+[ext_resource type="Texture2D" path="res://assets/world/hills_far.png" id="16_hills_far"]
+[ext_resource type="Texture2D" path="res://assets/world/hills_near.png" id="17_hills_near"]
+[ext_resource type="Texture2D" path="res://assets/world/contact_shadow.png" id="18_blob"]
+[ext_resource type="Shader" path="res://assets/world/flag_wave.gdshader" id="19_flag_shader"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(2400, 110)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plata"]
+size = Vector2(220, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platb"]
+size = Vector2(190, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platc"]
+size = Vector2(200, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platd"]
+size = Vector2(280, 28)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_player"]
+radius = 16.0
+height = 48.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_coin"]
+radius = 14.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_flag"]
+size = Vector2(44, 96)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_flag"]
+shader = ExtResource("19_flag_shader")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_reset_normal"]
+content_margin_left = 28.0
+content_margin_top = 12.0
+content_margin_right = 28.0
+content_margin_bottom = 12.0
+bg_color = Color(0.96, 0.42, 0.32, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_reset_hover"]
+content_margin_left = 28.0
+content_margin_top = 12.0
+content_margin_right = 28.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 0.55, 0.36, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_reset_pressed"]
+content_margin_left = 28.0
+content_margin_top = 12.0
+content_margin_right = 28.0
+content_margin_bottom = 12.0
+bg_color = Color(0.78, 0.28, 0.22, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_game")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="Sky" type="TextureRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("10_sky")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -1
+
+[node name="FarHills" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.16, 0.04)
+motion_mirroring = Vector2(2944, 0)
+
+[node name="Sprite" type="Sprite2D" parent="ParallaxBackground/FarHills"]
+position = Vector2(1280, 618)
+scale = Vector2(1.15, 0.46)
+texture = ExtResource("16_hills_far")
+
+[node name="NearHills" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.4, 0.08)
+motion_mirroring = Vector2(3072, 0)
+
+[node name="Sprite" type="Sprite2D" parent="ParallaxBackground/NearHills"]
+position = Vector2(1280, 632)
+scale = Vector2(1.2, 0.4)
+texture = ExtResource("17_hills_near")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Ground" type="StaticBody2D" parent="World"]
+position = Vector2(1100, 630)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="Sprite" type="Sprite2D" parent="World/Ground"]
+position = Vector2(0, 12)
+scale = Vector2(1.01, 0.4)
+texture = ExtResource("11_ground")
+
+[node name="ShadowA" type="Sprite2D" parent="World/Ground"]
+z_index = 1
+position = Vector2(-755, -46)
+scale = Vector2(2.15, 0.72)
+modulate = Color(0.07, 0.04, 0.08, 0.42)
+texture = ExtResource("18_blob")
+
+[node name="ShadowB" type="Sprite2D" parent="World/Ground"]
+z_index = 1
+position = Vector2(-490, -46)
+scale = Vector2(2.05, 0.78)
+modulate = Color(0.07, 0.04, 0.08, 0.4)
+texture = ExtResource("18_blob")
+
+[node name="ShadowC" type="Sprite2D" parent="World/Ground"]
+z_index = 1
+position = Vector2(-230, -46)
+scale = Vector2(2.35, 0.88)
+modulate = Color(0.07, 0.04, 0.08, 0.38)
+texture = ExtResource("18_blob")
+
+[node name="ShadowD" type="Sprite2D" parent="World/Ground"]
+z_index = 1
+position = Vector2(145, -46)
+scale = Vector2(2.7, 0.8)
+modulate = Color(0.07, 0.04, 0.08, 0.4)
+texture = ExtResource("18_blob")
+
+[node name="PlatA" type="StaticBody2D" parent="World"]
+position = Vector2(380, 515)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatA"]
+shape = SubResource("RectangleShape2D_plata")
+
+[node name="Sprite" type="Sprite2D" parent="World/PlatA"]
+position = Vector2(0, 6)
+scale = Vector2(0.36, 0.36)
+texture = ExtResource("12_plat")
+
+[node name="PlatB" type="StaticBody2D" parent="World"]
+position = Vector2(660, 450)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatB"]
+shape = SubResource("RectangleShape2D_platb")
+
+[node name="Sprite" type="Sprite2D" parent="World/PlatB"]
+position = Vector2(0, 6)
+scale = Vector2(0.31, 0.36)
+texture = ExtResource("12_plat")
+
+[node name="PlatC" type="StaticBody2D" parent="World"]
+position = Vector2(940, 385)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatC"]
+shape = SubResource("RectangleShape2D_platc")
+
+[node name="Sprite" type="Sprite2D" parent="World/PlatC"]
+position = Vector2(0, 6)
+scale = Vector2(0.325, 0.36)
+texture = ExtResource("12_plat")
+
+[node name="PlatD" type="StaticBody2D" parent="World"]
+position = Vector2(1280, 445)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatD"]
+shape = SubResource("RectangleShape2D_platd")
+
+[node name="Sprite" type="Sprite2D" parent="World/PlatD"]
+position = Vector2(0, 8)
+scale = Vector2(0.355, 0.36)
+texture = ExtResource("13_plat_wide")
+
+[node name="Flag" type="Area2D" parent="World/PlatD"]
+position = Vector2(108, -62)
+monitoring = true
+monitorable = false
+
+[node name="Sprite" type="Sprite2D" parent="World/PlatD/Flag"]
+material = SubResource("ShaderMaterial_flag")
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("14_flag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/PlatD/Flag"]
+position = Vector2(4, -6)
+shape = SubResource("RectangleShape2D_flag")
+
+[node name="Player" type="CharacterBody2D" parent="World"]
+position = Vector2(180, 548)
+script = ExtResource("2_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Player"]
+shape = SubResource("CapsuleShape2D_player")
+
+[node name="ContactShadow" type="Sprite2D" parent="World/Player"]
+position = Vector2(0, 22)
+scale = Vector2(0.55, 0.45)
+modulate = Color(1, 1, 1, 0.75)
+z_index = -1
+texture = ExtResource("18_blob")
+
+[node name="Visual" type="Node2D" parent="World/Player"]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="World/Player/Visual"]
+position = Vector2(0, 2)
+scale = Vector2(0.15, 0.15)
+sprite_frames = ExtResource("9_frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Camera2D" type="Camera2D" parent="World/Player"]
+zoom = Vector2(1.15, 1.15)
+limit_left = 0
+limit_top = -80
+limit_right = 2300
+limit_bottom = 720
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+
+[node name="SfxJump" type="AudioStreamPlayer" parent="World/Player"]
+stream = ExtResource("3_jump")
+volume_db = -4.0
+
+[node name="Coin1" type="Area2D" parent="World"]
+position = Vector2(380, 473)
+script = ExtResource("4_coin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Coin1"]
+shape = SubResource("CircleShape2D_coin")
+
+[node name="Visual" type="Node2D" parent="World/Coin1"]
+
+[node name="Sprite" type="Sprite2D" parent="World/Coin1/Visual"]
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("15_coin_tex")
+
+[node name="Coin2" type="Area2D" parent="World"]
+position = Vector2(660, 408)
+script = ExtResource("4_coin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Coin2"]
+shape = SubResource("CircleShape2D_coin")
+
+[node name="Visual" type="Node2D" parent="World/Coin2"]
+
+[node name="Sprite" type="Sprite2D" parent="World/Coin2/Visual"]
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("15_coin_tex")
+
+[node name="Coin3" type="Area2D" parent="World"]
+position = Vector2(800, 320)
+script = ExtResource("4_coin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Coin3"]
+shape = SubResource("CircleShape2D_coin")
+
+[node name="Visual" type="Node2D" parent="World/Coin3"]
+
+[node name="Sprite" type="Sprite2D" parent="World/Coin3/Visual"]
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("15_coin_tex")
+
+[node name="Coin4" type="Area2D" parent="World"]
+position = Vector2(940, 343)
+script = ExtResource("4_coin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Coin4"]
+shape = SubResource("CircleShape2D_coin")
+
+[node name="Visual" type="Node2D" parent="World/Coin4"]
+
+[node name="Sprite" type="Sprite2D" parent="World/Coin4/Visual"]
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("15_coin_tex")
+
+[node name="Coin5" type="Area2D" parent="World"]
+position = Vector2(1280, 403)
+script = ExtResource("4_coin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Coin5"]
+shape = SubResource("CircleShape2D_coin")
+
+[node name="Visual" type="Node2D" parent="World/Coin5"]
+
+[node name="Sprite" type="Sprite2D" parent="World/Coin5/Visual"]
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("15_coin_tex")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Margin" type="MarginContainer" parent="HUD"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="HUD/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.86, 0.5, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.1, 0.9)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 28
+text = "AMBER RUN"
+
+[node name="ScoreLabel" type="Label" parent="HUD/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.1, 0.9)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 20
+text = "Coins   0 / 5"
+
+[node name="HintLabel" type="Label" parent="HUD/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.8)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.1, 0.85)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 16
+text = "A / D  or  arrows  to run     Space / W  to jump     reach the flag"
+
+[node name="WinPanel" type="CenterContainer" parent="HUD"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 0
+
+[node name="VBox" type="VBoxContainer" parent="HUD/WinPanel"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="WinLabel" type="Label" parent="HUD/WinPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.55, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.1, 0.9)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 36
+text = "You got them all.
+That's the demo."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResetButton" type="Button" parent="HUD/WinPanel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.96, 0.9, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.92, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.05, 0.1, 0.85)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_reset_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_reset_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_reset_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_reset_hover")
+text = "Play again"
+
+[node name="SfxCoin" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_coin_sfx")
+volume_db = -3.0
+
+[node name="SfxFall" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_fall")
+volume_db = -5.0
+
+[node name="SfxWin" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_win")
+volume_db = -2.0
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_theme")
+volume_db = -11.0
+autoplay = true

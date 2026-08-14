@@ -1,0 +1,72 @@
+[gd_resource type="SpriteFrames" load_steps=14 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/player/idle_00.png" id="idle_00"]
+[ext_resource type="Texture2D" path="res://assets/player/idle_01.png" id="idle_01"]
+[ext_resource type="Texture2D" path="res://assets/player/idle_02.png" id="idle_02"]
+[ext_resource type="Texture2D" path="res://assets/player/idle_03.png" id="idle_03"]
+[ext_resource type="Texture2D" path="res://assets/player/run_00.png" id="run_00"]
+[ext_resource type="Texture2D" path="res://assets/player/run_01.png" id="run_01"]
+[ext_resource type="Texture2D" path="res://assets/player/run_02.png" id="run_02"]
+[ext_resource type="Texture2D" path="res://assets/player/run_03.png" id="run_03"]
+[ext_resource type="Texture2D" path="res://assets/player/run_04.png" id="run_04"]
+[ext_resource type="Texture2D" path="res://assets/player/run_05.png" id="run_05"]
+[ext_resource type="Texture2D" path="res://assets/player/run_06.png" id="run_06"]
+[ext_resource type="Texture2D" path="res://assets/player/run_07.png" id="run_07"]
+[ext_resource type="Texture2D" path="res://assets/player/jump_00.png" id="jump_00"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("idle_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("idle_03")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("jump_00")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("run_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_05")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("run_07")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}]

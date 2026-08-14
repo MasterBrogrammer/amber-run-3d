@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Amber Run</title>
+  <style>
+    :root {
+      --navy: #120b1c;
+      --coral: #c4473a;
+      --amber: #f5b14d;
+      --peach: #ffd39a;
+      --ink: #fff6e8;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, #1a1028 0%, #b83d38 42%, #f0a04a 78%, #ffd18a 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+    main { width: min(880px, 100%); }
+    h1 {
+      font-size: clamp(40px, 8vw, 68px);
+      letter-spacing: 0.08em;
+      margin: 0 0 8px;
+      text-shadow: 0 3px 0 #1a1028;
+    }
+    .lede {
+      margin: 0 0 28px;
+      font-size: 18px;
+      max-width: 38ch;
+      color: var(--peach);
+      text-shadow: 0 1px 0 #1a1028;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    a.card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: rgba(18, 11, 28, 0.72);
+      border: 2px solid #f5b14d;
+      border-radius: 14px;
+      padding: 22px 22px 20px;
+      box-shadow: 0 10px 0 #1a1028;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    a.card:hover, a.card:focus-visible {
+      transform: translateY(-3px);
+      box-shadow: 0 13px 0 #1a1028;
+      outline: none;
+    }
+    .kicker {
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin: 0 0 8px;
+    }
+    h2 { margin: 0 0 8px; font-size: 28px; }
+    p { margin: 0 0 16px; line-height: 1.45; color: #f3e0c4; }
+    .go {
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      display: inline-block;
+      background: #f56b52;
+      color: #fff6e8;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+    footer {
+      margin-top: 28px;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 13px;
+      color: #2a1620;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>AMBER RUN</h1>
+    <p class="lede">A short sunset platformer. Collect coins, reach the flag, try not to fall.</p>
+    <div class="grid">
+      <a class="card" href="original/">
+        <p class="kicker">Original</p>
+        <h2>Block art</h2>
+        <p>The first demo: ColorRect sunset, coral runner, five coins.</p>
+        <span class="go">Play original</span>
+      </a>
+      <a class="card" href="remake/">
+        <p class="kicker">Remake</p>
+        <h2>3D sprites</h2>
+        <p>Same scroller, Blender-rendered assets, waving flag, layered sky.</p>
+        <span class="go">Play remake</span>
+      </a>
+    </div>
+    <footer>Click the game window first so it has focus. A/D or arrows to run, Space/W to jump. First load pulls a ~40&nbsp;MB engine file.</footer>
+  </main>
+</body>
+</html>
