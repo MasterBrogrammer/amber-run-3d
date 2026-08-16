@@ -2,6 +2,8 @@
 
 Remake of `../amber-run` as a **new** Godot 4.7.1 project. Same 2D scroller feel; visuals are Blender-rendered sprites instead of ColorRects.
 
+Studio library (shared naming / Imagine / Hi3D): `/Users/stevenwoolery/studio/` — read `AGENTS.md` there before filing new art.
+
 This file is for Grok / other agents. Read it before changing the game.
 
 ## What stays the same
